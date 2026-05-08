@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - SITTA</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <img src="https://1.bp.blogspot.com/-1clLdnqn9Ac/UMvqQKhf_rI/AAAAAAAAA4M/g4ABaiqOYeM/s1600/Logo+UT-Universitas-Terbuka.png" alt="Logo UT" />
+        <span>SITTA UT</span>
+      </div>
+      <ul>
+        <li><a href="index.html">Login</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="stok.html">Informasi Bahan Ajar</a></li>
+        <li><a href="tracking.html">Tracking Pengiriman</a></li>
+      </ul>
+    </nav>
+
+    <div class="login-container">
+      <img src="https://1.bp.blogspot.com/-1clLdnqn9Ac/UMvqQKhf_rI/AAAAAAAAA4M/g4ABaiqOYeM/s1600/Logo+UT-Universitas-Terbuka.png" alt="Logo UT" class="logo" />
+      <h2>Login Aplikasi SITTA</h2>
+
+      <form id="loginForm">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Masukkan email" required />
+
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Masukkan password"
+          required
+        />
+
+        <button type="submit" class="btn">Login</button>
+      </form>
+
+      <div class="links">
+        <a href="#" id="forgotBtn">Lupa Password?</a> |
+        <a href="#" id="registerBtn">Daftar</a>
+      </div>
+    </div>
+
+    <!-- Modal Lupa Password -->
+    <div id="forgotModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Lupa Password</h3>
+        <p>Silakan hubungi admin UT daerah untuk reset password Anda.</p>
+      </div>
+    </div>
+
+    <!-- Modal Daftar -->
+    <div id="registerModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Form Pendaftaran</h3>
+        <input type="text" placeholder="Nama Lengkap" />
+        <input type="email" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+        <button class="btn">Daftar</button>
+      </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>

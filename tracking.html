@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tracking Pengiriman - SITTA</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <img src="https://1.bp.blogspot.com/-1clLdnqn9Ac/UMvqQKhf_rI/AAAAAAAAA4M/g4ABaiqOYeM/s1600/Logo+UT-Universitas-Terbuka.png" alt="Logo UT" />
+        <span>SITTA UT</span>
+      </div>
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="stok.html">Informasi Bahan Ajar</a></li>
+        <li><a href="tracking.html" class="active">Tracking Pengiriman</a></li>
+        <li class="dropdown">
+          <a href="#">Laporan ▾</a>
+          <ul class="dropdown-content">
+            <li><a href="histori.html">Histori Transaksi</a></li>
+            <li><a href="tracking.html">Monitoring Progress DO</a></li>
+            <li><a href="stok.html">Rekap Bahan Ajar</a></li>
+          </ul>
+        </li>
+        <li><a href="index.html" style="color: var(--danger);">Logout</a></li>
+      </ul>
+    </nav>
+
+    <section class="content">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 15px;">
+             <div style="width: 40px; height: 40px; background: rgba(59, 130, 246, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--primary);">
+               <i class="fas fa-truck-loading"></i>
+             </div>
+             <h2 style="margin: 0;">Monitoring Progress DO</h2>
+          </div>
+          <p style="color: var(--text-muted); margin: 5px 0 0 55px;">Pantau status pengiriman bahan ajar secara real-time.</p>
+        </div>
+      </div>
+
+      <div class="tracking-grid" style="display: grid; grid-template-columns: 1fr 350px; gap: 30px;">
+        <div class="tracking-main">
+          <!-- Search Box -->
+          <div style="background: var(--surface); padding: 30px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 30px; box-shadow: var(--shadow-md);">
+            <h3 style="margin-bottom: 20px; font-size: 18px;"><i class="fas fa-search" style="margin-right: 10px;"></i> Lacak Nomor DO / Billing</h3>
+            <div style="display: flex; gap: 10px;">
+              <input type="text" id="doNumber" placeholder="Masukkan Nomor DO (Contoh: 2023001234)" style="flex: 1; background: rgba(255,255,255,0.05);">
+              <button id="searchDO" class="btn" style="width: auto; background: var(--secondary); color: #000; font-weight: 700;">Lacak Pesanan</button>
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 15px;">
+              <i class="fas fa-info-circle"></i> Masukkan nomor DO atau Billing untuk melihat riwayat perjalanan paket.
+            </p>
+          </div>
+
+          <!-- Dynamic Result -->
+          <div id="trackingResult">
+             <div style="text-align: center; padding: 60px 20px; color: var(--text-muted); background: rgba(255,255,255,0.02); border: 2px dashed var(--border); border-radius: 16px;">
+                <i class="fas fa-box-open" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
+                <p>Belum ada data yang dicari. Silakan masukkan nomor DO di atas.</p>
+             </div>
+          </div>
+        </div>
+
+        <div class="tracking-side">
+           <div style="background: var(--surface); padding: 25px; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-md);">
+              <h3 style="font-size: 16px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+                <i class="fas fa-list-ul" style="margin-right: 10px; color: var(--secondary);"></i> Billing Terbaru
+              </h3>
+              <div id="billingList">
+                <!-- Billing cards from script.js -->
+              </div>
+           </div>
+
+           <div style="margin-top: 25px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.1)); padding: 25px; border-radius: 16px; border: 1px solid var(--primary);">
+              <h4 style="color: var(--primary); margin-bottom: 10px;">Butuh Bantuan?</h4>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+                Jika nomor DO tidak ditemukan atau terdapat kendala pengiriman, hubungi Unit Logistik UT.
+              </p>
+              <button class="btn btn-small" style="margin-top: 15px; width: 100%; background: var(--primary);">Hubungi Admin</button>
+           </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+      // Tracking logic handled in script.js
+    </script>
+  </body>
+</html>

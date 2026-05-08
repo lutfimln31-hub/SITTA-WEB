@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Histori Transaksi - SITTA</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <img src="https://1.bp.blogspot.com/-1clLdnqn9Ac/UMvqQKhf_rI/AAAAAAAAA4M/g4ABaiqOYeM/s1600/Logo+UT-Universitas-Terbuka.png" alt="Logo UT" />
+        <span>SITTA UT</span>
+      </div>
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="stok.html">Informasi Bahan Ajar</a></li>
+        <li><a href="tracking.html">Tracking Pengiriman</a></li>
+        <li class="dropdown">
+          <a href="#" class="active">Laporan ▾</a>
+          <ul class="dropdown-content">
+            <li><a href="histori.html">Histori Transaksi</a></li>
+            <li><a href="tracking.html">Monitoring Progress DO</a></li>
+            <li><a href="stok.html">Rekap Bahan Ajar</a></li>
+          </ul>
+        </li>
+        <li><a href="index.html" style="color: var(--danger);">Logout</a></li>
+      </ul>
+    </nav>
+
+    <section class="content">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px;">
+        <div>
+          <nav style="font-size: 12px; margin-bottom: 10px; color: var(--text-muted);">
+            Dashboard / <span style="color: var(--primary);">Histori Transaksi</span>
+          </nav>
+          <div style="display: flex; align-items: center; gap: 15px;">
+             <div style="width: 40px; height: 40px; background: rgba(59, 130, 246, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--primary);">
+               <i class="fas fa-history"></i>
+             </div>
+             <h2 style="margin: 0;">Histori Transaksi Bahan Ajar</h2>
+          </div>
+          <p style="color: var(--text-muted); margin: 5px 0 0 55px;">Riwayat lengkap seluruh transaksi bahan ajar dalam sistem.</p>
+        </div>
+        <button id="exportCsvBtn" class="btn btn-small" style="background: var(--surface); color: var(--secondary); border: 1.5px solid var(--secondary); font-weight: 700;">
+          <i class="fas fa-file-csv"></i> Export CSV
+        </button>
+      </div>
+
+      <!-- Stats Row (Image 4 top) -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(59, 130, 246, 0.2);"><i class="fas fa-clipboard-list" style="color: #3b82f6;"></i></div>
+          <div class="stat-info">
+            <h3 id="totalTrxCount">-</h3>
+            <p>Total Transaksi</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(16, 185, 129, 0.2);"><i class="fas fa-check-circle" style="color: #10b981;"></i></div>
+          <div class="stat-info">
+            <h3 id="successTrxCount">-</h3>
+            <p>Transaksi Selesai</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(234, 179, 8, 0.2);"><i class="fas fa-sync-alt" style="color: #eab308;"></i></div>
+          <div class="stat-info">
+            <h3 id="processTrxCount">-</h3>
+            <p>Dalam Proses</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(13, 148, 136, 0.2);"><i class="fas fa-book" style="color: #0d9488;"></i></div>
+          <div class="stat-info">
+            <h3 id="totalBooksCount">-</h3>
+            <p>Total Eksemplar</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Bar (Image 4 middle) -->
+      <div class="filter-bar">
+        <div class="filter-group">
+          <div style="position: relative; width: 100%;">
+            <i class="fas fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+            <input type="text" id="historySearch" placeholder="Cari nama / barang..." style="padding-left: 45px;">
+          </div>
+        </div>
+        <div class="filter-group small">
+          <select id="statusFilter">
+            <option value="Semua">Semua Status</option>
+            <option value="Selesai">Selesai</option>
+            <option value="Proses">Proses</option>
+          </select>
+        </div>
+        <div class="filter-group small">
+          <input type="date" id="dateFilter">
+        </div>
+        <button id="resetFilterBtn" class="btn btn-small" style="background: transparent; border: 1px solid var(--secondary); color: var(--secondary); white-space: nowrap;">Reset Filter</button>
+      </div>
+
+      <!-- Main Table -->
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID Transaksi</th>
+              <th>Tanggal</th>
+              <th>No. DO / Resi</th>
+              <th>No. Billing</th>
+              <th>Pengguna</th>
+              <th>Bahan Ajar</th>
+              <th>Jumlah</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody">
+            <!-- Data from JS -->
+          </tbody>
+        </table>
+        <div style="padding: 15px 20px; border-top: 1px solid var(--border); background: rgba(0,0,0,0.2); font-size: 13px; color: var(--text-muted);">
+          Menampilkan <span id="showingCount">5</span> dari <span id="totalCount">5</span> transaksi
+        </div>
+      </div>
+    </section>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+      // Update stats dinamis dari historyStore
+      document.addEventListener('DOMContentLoaded', () => {
+        const totalEl = document.getElementById('totalTrxCount');
+        const successEl = document.getElementById('successTrxCount');
+        const processEl = document.getElementById('processTrxCount');
+        const booksEl = document.getElementById('totalBooksCount');
+        if (totalEl) totalEl.innerText = historyStore.length;
+        if (successEl) successEl.innerText = historyStore.filter(h => h.status === 'Selesai').length;
+        if (processEl) processEl.innerText = historyStore.filter(h => h.status === 'Proses').length;
+        if (booksEl) booksEl.innerText = historyStore.reduce((acc, h) => acc + (h.jumlah || 0), 0);
+      });
+    </script>
+  </body>
+</html>

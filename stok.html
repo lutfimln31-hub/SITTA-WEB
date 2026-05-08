@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Informasi Stok Bahan Ajar - SITTA</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <img src="https://1.bp.blogspot.com/-1clLdnqn9Ac/UMvqQKhf_rI/AAAAAAAAA4M/g4ABaiqOYeM/s1600/Logo+UT-Universitas-Terbuka.png" alt="Logo UT" />
+        <span>SITTA UT</span>
+      </div>
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="stok.html" class="active">Informasi Bahan Ajar</a></li>
+        <li><a href="tracking.html">Tracking Pengiriman</a></li>
+        <li class="dropdown">
+          <a href="#">Laporan ▾</a>
+          <ul class="dropdown-content">
+            <li><a href="histori.html">Histori Transaksi</a></li>
+            <li><a href="tracking.html">Monitoring Progress DO</a></li>
+            <li><a href="stok.html">Rekap Bahan Ajar</a></li>
+          </ul>
+        </li>
+        <li><a href="index.html" style="color: var(--danger);">Logout</a></li>
+      </ul>
+    </nav>
+
+    <section class="content">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 15px;">
+             <div style="width: 40px; height: 40px; background: rgba(59, 130, 246, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--primary);">
+               <i class="fas fa-book"></i>
+             </div>
+             <h2 style="margin: 0;">Informasi Bahan Ajar</h2>
+          </div>
+          <p style="color: var(--text-muted); margin: 5px 0 0 55px;">Kelola stok dan informasi bahan ajar yang tersedia.</p>
+        </div>
+        <button id="addStokBtn" class="btn btn-small" style="background: var(--secondary); color: #000; font-weight: 700;">
+          <i class="fas fa-plus"></i> Tambah Stok
+        </button>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="filter-group">
+          <div style="position: relative; width: 100%;">
+            <i class="fas fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+            <input type="text" id="searchInput" placeholder="Cari nama / kode barang..." style="padding-left: 45px;">
+          </div>
+        </div>
+        <div class="filter-group small">
+          <select id="typeFilter">
+            <option value="Semua">Semua Jenis</option>
+            <option value="BMP">BMP</option>
+            <option value="Non-BMP">Non-BMP</option>
+          </select>
+        </div>
+        <div style="display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+          <button class="view-btn active" data-view="grid" style="padding: 10px 15px; border: none; background: var(--primary); color: white; cursor: pointer;"><i class="fas fa-th-large"></i> Grid</button>
+          <button class="view-btn" data-view="table" style="padding: 10px 15px; border: none; background: var(--surface); color: var(--text-muted); cursor: pointer;"><i class="fas fa-list"></i> Tabel</button>
+        </div>
+      </div>
+
+      <div id="stokGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px;">
+        <!-- Data rendered here as stock-cards -->
+      </div>
+    </section>
+
+    <!-- Modal Tambah Stok -->
+    <div id="addModal" class="modal">
+      <div class="modal-content" style="max-width: 540px;">
+        <span class="close">&times;</span>
+        <h3 style="margin-bottom: 20px;">
+          <i class="fas fa-plus-circle" style="color: var(--secondary); margin-right: 8px;"></i>Tambah Bahan Ajar Baru
+        </h3>
+        <form id="addForm">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div class="form-group">
+              <label>Kode Lokasi</label>
+              <input type="text" id="lokasi" placeholder="Contoh: 0JKT01" required>
+            </div>
+            <div class="form-group">
+              <label>Kode Barang</label>
+              <input type="text" id="kode" placeholder="Contoh: EKMA1234" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Nama Bahan Ajar</label>
+            <input type="text" id="nama" placeholder="Masukkan nama lengkap..." required>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div class="form-group">
+              <label>Jenis</label>
+              <select id="jenis">
+                <option value="BMP">BMP</option>
+                <option value="Non-BMP">Non-BMP</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Edisi</label>
+              <input type="number" id="edisi" value="1" min="1" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Stok Awal</label>
+            <input type="number" id="stok" placeholder="0" min="0" required>
+          </div>
+
+          <!-- Cover Buku -->
+          <div class="form-group">
+            <label>Cover Buku <span style="font-weight: 400; color: var(--text-muted); font-size: 12px;">(opsional)</span></label>
+            <div style="display: flex; gap: 15px; align-items: flex-start; background: rgba(255,255,255,0.03); border: 2px dashed var(--border); border-radius: 12px; padding: 15px;">
+              <!-- Preview Area -->
+              <div style="flex-shrink: 0; text-align: center;">
+                <img id="coverPreview"
+                     src="https://via.placeholder.com/90x120/1e293b/64748b?text=No+Cover"
+                     alt="Preview Cover"
+                     style="width: 90px; height: 120px; object-fit: cover; border-radius: 8px; border: 2px solid var(--border); background: #111; transition: all 0.3s; display: block;">
+                <span style="font-size: 10px; color: var(--text-muted); display: block; margin-top: 5px;">Preview</span>
+              </div>
+              <!-- Input Controls -->
+              <div style="flex: 1; display: flex; flex-direction: column; gap: 12px;">
+                <!-- Upload File -->
+                <div>
+                  <span style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px; font-weight: 600;">
+                    <i class="fas fa-upload" style="margin-right: 4px; color: var(--primary);"></i>Upload dari perangkat:
+                  </span>
+                  <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                    <label for="coverFile" style="display: inline-flex; align-items: center; gap: 7px; cursor: pointer; padding: 8px 16px; background: var(--primary); color: white; border-radius: 8px; font-size: 13px; font-weight: 600; transition: all 0.2s; white-space: nowrap;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+                      <i class="fas fa-folder-open"></i> Pilih Gambar
+                    </label>
+                    <input type="file" id="coverFile" accept="image/*" style="display: none;">
+                    <span id="coverFileName" style="font-size: 11px; color: var(--text-muted);">Belum ada file dipilih</span>
+                  </div>
+                </div>
+                <!-- Divider -->
+                <div style="display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 11px; font-weight: 600;">
+                  <div style="flex: 1; height: 1px; background: var(--border);"></div>
+                  ATAU
+                  <div style="flex: 1; height: 1px; background: var(--border);"></div>
+                </div>
+                <!-- URL Input -->
+                <div>
+                  <span style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px; font-weight: 600;">
+                    <i class="fas fa-link" style="margin-right: 4px; color: var(--secondary);"></i>Tempel URL gambar:
+                  </span>
+                  <input type="text" id="coverUrl" placeholder="https://contoh.com/cover.jpg" style="font-size: 13px; padding: 8px 12px; width: 100%;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn" style="margin-top: 15px; width: 100%; background: var(--secondary); color: #000; font-weight: 700; padding: 14px; font-size: 15px;">
+            <i class="fas fa-save" style="margin-right: 8px;"></i>Simpan Bahan Ajar
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Floating Cart -->
+    <div id="floatingCart" class="floating-cart" onclick="openCart()">
+      <i class="fas fa-shopping-cart"></i>
+      <span id="cartCount" class="cart-badge">0</span>
+    </div>
+
+    <!-- Modal Keranjang -->
+    <div id="cartModal" class="modal">
+      <div class="modal-content" style="max-width: 500px;">
+        <span class="close">&times;</span>
+        <h3 style="border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 20px;">
+          <i class="fas fa-shopping-cart" style="margin-right: 10px; color: var(--secondary);"></i> Keranjang Pesanan
+        </h3>
+        <div id="cartList" style="max-height: 400px; overflow-y: auto;">
+          <!-- Cart items from JS -->
+        </div>
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 2px dashed var(--border);">
+           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: 700; font-size: 18px;">
+              <span>Total:</span>
+              <span id="cartTotal" style="color: var(--secondary);">Rp 0</span>
+           </div>
+           <button onclick="checkout()" class="btn" style="width: 100%; padding: 15px; background: var(--secondary); color: #000; font-weight: 700; font-size: 16px;">
+              <i class="fas fa-check-circle"></i> Selesaikan Pesanan (Checkout)
+           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Struk -->
+    <div id="receiptModal" class="modal">
+      <div class="modal-content" style="max-width: 450px; background: transparent; border: none; box-shadow: none;">
+        <span class="close" style="color: white; font-size: 30px; cursor: pointer; float: right;">&times;</span>
+        <div id="receiptContent">
+          <!-- Struk content from JS -->
+        </div>
+        <div style="margin-top: 20px; text-align: center;">
+          <button onclick="window.print()" class="btn" style="background: var(--primary); color: white; width: auto; padding: 10px 30px;">
+            <i class="fas fa-print"></i> Cetak Struk
+          </button>
+          <button onclick="document.getElementById('receiptModal').style.display='none'" class="btn" style="background: rgba(255,255,255,0.1); color: white; width: auto; padding: 10px 30px; margin-left: 10px;">
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Konfirmasi Hapus -->
+    <div id="deleteModal" class="modal">
+      <div class="modal-content" style="max-width: 400px; text-align: center;">
+        <div style="font-size: 50px; margin-bottom: 15px;">🗑️</div>
+        <h3 style="margin-bottom: 8px;">Hapus Bahan Ajar?</h3>
+        <p id="deleteModalMsg" style="color: var(--text-muted); margin-bottom: 25px; font-size: 14px;">Bahan ajar ini akan dihapus dari sistem.</p>
+        <div style="display: flex; gap: 12px; justify-content: center;">
+          <button id="cancelDeleteBtn" class="btn btn-small" style="background: var(--surface); border: 1px solid var(--border); color: var(--text-main); padding: 10px 25px;">
+            Batal
+          </button>
+          <button id="confirmDeleteBtn" class="btn btn-small" style="background: var(--danger); color: white; padding: 10px 25px; font-weight: 700;">
+            <i class="fas fa-trash"></i> Hapus
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
