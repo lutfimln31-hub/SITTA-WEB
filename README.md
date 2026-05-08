@@ -1,7 +1,7 @@
 # SITTA - Sistem Informasi Transaksi & Tracking Bahan Ajar (Universitas Terbuka)
 
 ## 📋 Deskripsi Proyek
-SITTA adalah aplikasi web modern berbasis *Client-Side* yang dirancang untuk mengelola inventaris, transaksi, dan pelacakan pengiriman bahan ajar di Universitas Terbuka. Aplikasi ini mengusung tema **Cinematic Dark Mode** yang premium dengan fokus pada UI/UX yang intuitif dan fungsionalitas realtime.
+SITTA adalah aplikasi web modern berbasis *Client-Side* yang dirancang untuk mengelola inventaris, transaksi, dan pelacakan pengiriman bahan ajar di Universitas Terbuka. Aplikasi ini mengusung tema **Nature & Forest** yang menenangkan dengan estetika premium, fokus pada UI/UX yang intuitif, dan fungsionalitas realtime.
 
 ---
 
